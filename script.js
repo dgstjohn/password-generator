@@ -63,12 +63,13 @@ function writePassword() {
                 finalPassword = finalPassword + pickOneSpecialCharacterLetter;
             }
         };
-        // Reduce length of finalPassword to match number length chosen by user at outset
+        // reduce length of finalPassword to match number length chosen by user at outset
         if (finalPassword.length > passwordsize) {
             finalPassword = finalPassword.substring(0, passwordsize);
         }
         return finalPassword;
     }
+    // pass resulting password into textarea field of index.html based on "password" id selector
     var password = generatePassword();
     var passwordText = document.querySelector("#password");
     passwordText.value = password;
