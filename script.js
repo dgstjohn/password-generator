@@ -8,21 +8,21 @@ function writePassword() {
     var generatePassword = function () {
 
         // prompt user for length of password
-        var passwordsize = parseInt(prompt("How many characters would you like your password to contain? Choose a numeral between 8 and 128"));
+        var passwordsize = parseInt(prompt("How many characters would you like your password to contain? Choose a number between 8 and 128"));
 
         // for next three if statements, if passwordsize value is not a number, is less than 8 or is greater than 128, alert user and restart generatePassword
         // TA recommended breaking this up into three separate statements instead using of one statement with || separators (my original approach)
         if (Number.isNaN(passwordsize)) {
             alert("Your choice must be a number, between 8 and 128; please try again");
-            generatePassword();
+            writePassword();
         };
         if (passwordsize < 8) {
             alert("You cannot choose a number less than 8; please try again");
-            generatePassword();
+            writePassword();
         };
         if (passwordsize > 128) {
             alert("You cannot choose a number greater than 128; please try again");
-            generatePassword();
+            writePassword();
         };
 
         // If passwordsize was an acceptable value, set variables for four character type confirms
@@ -34,7 +34,9 @@ function writePassword() {
         // if all four confirms are false, alert user and restart generatePassword
         if (!isLowerCase && !isUpperCase && !isNumber && !isSpecialCharacter) {
             alert("You must choose at least one type of character to generate a valid password");
-            generatePassword();
+            console.log(alert);
+            writePassword();
+            console.log(writePassword);
         }
 
         // If at least one confirm is true, set variables for characters to be randomly selected and final password to be generated
@@ -51,6 +53,7 @@ function writePassword() {
                 var randomPickLowerCase = Math.floor(Math.random() * lowercase.length);
                 var pickOneLowerCaseLetter = lowercase.charAt(randomPickLowerCase);
                 finalPassword = finalPassword + pickOneLowerCaseLetter;
+                console.log(finalPassword);
             }
             if (isUpperCase === true) {
                 var randomPickUpperCase = Math.floor(Math.random() * uppercase.length);
