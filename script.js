@@ -1,7 +1,7 @@
-// Get references to the #generate element
+// get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
-// Write password to the #password input
+// write password to the #password input
 function writePassword() {
 
     // establish generatePassword function
@@ -10,36 +10,29 @@ function writePassword() {
         // prompt user for length of password
         var passwordsize = parseInt(prompt("How many characters would you like your password to contain? Choose a number between 8 and 128"));
 
-        // for next three if statements, if passwordsize value is not a number, is less than 8 or is greater than 128, alert user and restart generatePassword
-        // TA recommended breaking this up into three separate statements instead using of one statement with || separators (my original approach)
-        if (Number.isNaN(passwordsize)) {
-            alert("Your choice must be a number, between 8 and 128; please try again");
-            writePassword();
-        };
-        if (passwordsize < 8) {
-            alert("You cannot choose a number less than 8; please try again");
-            writePassword();
-        };
-        if (passwordsize > 128) {
-            alert("You cannot choose a number greater than 128; please try again");
-            writePassword();
-        };
+        // if user chooses anything other than a legal number between 8 and 128, reprompt them for that
+        while (Number.isNaN(passwordsize) || passwordsize < 8 || passwordsize > 128) {
+            var passwordsize = parseInt(prompt("You must choose a number between 8 and 128"));
+        }
 
-        // If passwordsize was an acceptable value, set variables for four character type confirms
+        // once passwordsize is an acceptable value, set variables for four character type confirms
         var isLowerCase = confirm("Will your password include lowercase letters?");
         var isUpperCase = confirm("Will your password include uppercase letters?");
         var isNumber = confirm("Will your password include numbers?");
         var isSpecialCharacter = confirm("Will your password include any special characters?");
 
-        // if all four confirms are false, alert user and restart generatePassword
-        if (!isLowerCase && !isUpperCase && !isNumber && !isSpecialCharacter) {
+        // if all four confirms are false, alert user and rerun character type confirms
+        while (!isLowerCase && !isUpperCase && !isNumber && !isSpecialCharacter) {
             alert("You must choose at least one type of character to generate a valid password");
-            console.log(alert);
-            writePassword();
-            console.log(writePassword);
+            // resetting of confirm variables is not DRY, but seems unavoidable in this case
+            var isLowerCase = confirm("Will your password include lowercase letters?");
+            var isUpperCase = confirm("Will your password include uppercase letters?");
+            var isNumber = confirm("Will your password include numbers?");
+            var isSpecialCharacter = confirm("Will your password include any special characters?");
         }
 
-        // If at least one confirm is true, set variables for characters to be randomly selected and final password to be generated
+        // when at least one type confirm is true, set variables for characters to be randomly selected 
+        // and final password to be generated
         var lowercase = "abcdefghijklmnopqrstuvwxyz";
         var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         var numbers = "0123456789";
@@ -53,7 +46,6 @@ function writePassword() {
                 var randomPickLowerCase = Math.floor(Math.random() * lowercase.length);
                 var pickOneLowerCaseLetter = lowercase.charAt(randomPickLowerCase);
                 finalPassword = finalPassword + pickOneLowerCaseLetter;
-                console.log(finalPassword);
             }
             if (isUpperCase === true) {
                 var randomPickUpperCase = Math.floor(Math.random() * uppercase.length);
